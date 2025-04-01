@@ -32,9 +32,9 @@ Phần này hơi lý thuyết nhưng em/mình sẽ cố gắng diễn giải ng�
 
 - Embedding là quá trình ánh xạ các token đã mã hoá vào không gian vector N chiều. Sau khi embedding các từ có tính chất giống nhau sẽ được ở gần nhau trong không gian vector đó ("đẹp" sẽ ở gần "xinh" và cách xa "xấu"), ví dụ Vector của token "AI" có thể là [0.23, -0.67, 0.89, ..., 0.12]  (768 chiều với GPT-3.5). Vì tính chất này nên embedding sẽ được dùng đễ vector hoá thông tin document trong RAG sau đó sẽ tìm kiếm ngữ cảnh dựa vào độ tương đồng giữa 2 vector query và document (similarity search).
 
-- Attention & Transformer Layers: Phần này khá phức tạp và không quá quan trọng để có thể áp dụng RAG hay finetuning nên mọi người có thể tìm hiểu thêm tại https://www.youtube.com/watch?v=_Zt23FA31co&t=125s
+- Attention & Transformer Layers: Phần này khá dài, phức tạp và không quá quan trọng để có thể áp dụng RAG hay finetuning nên mọi người có thể tìm hiểu thêm tại https://www.youtube.com/watch?v=_Zt23FA31co&t=125s
 
-- Decoding & Sampling: Chiến lược sinh văn bản 
+- Decoding & Sampling:  ở bước này sẽ cấu hình để LLM sáng tạo hơn (temperature), Giới hạn số lượng từ có xác suất cao nhất để lựa chọn(Top-k Sampling) ... phần này chủ yếu để cấu hình model khi sử dụng.
 
 - Output: Các token sinh ra lần lượt dưới dạng số được giải mã (decode) về text và ghép lại với nhau thành câu trả lời. Việc sinh từ xảy ra tuần tự như sau:
 
@@ -131,7 +131,9 @@ Dưới đây là ví dụ về việc Finetuning LLM và kết hợp RAG với 
 - Tận dụng tốt GPU bằng các thư viện ví dụ tensorflow, pytorch...
 - Và một điều quan trọng nữa là code python rất ngắn gọn sẽ hiệu quả khi generate code bằng các công cụ hoặc model AI (copilot, gpt, gemini ...).
 
-### Open AI(gpt4-o) + RAG (cần có key open_ai_api)
+### Open AI(gpt4-o) + RAG (cần có open_ai_api_key)
+#### open_ai_api_key có thể lấy bằng việc đăng ký tài khoản và thanh toán tại https://platform.openai.com/
+
 Clone project hoặc download trực tiếp file này về máy:
 https://github.com/phucly95/AI-Public/blob/main/openai-rag.py
 Để chạy được code này cần cài python 3.12 và sau đó chạy thử project, nếu báo not found library nào thì cài cái đó là xong :D
@@ -162,5 +164,7 @@ Do bài viết cũng đã dài nên em/mình xin phép được để lại ph�
 Một chủ đề cũng rất hot gần đây mà em muốn chia sẻ cùng mọi người, chắc hẳn cũng nhiều anh chị em nghe đến AI Agent, Cursor, Manus ...
 
 Vậy AI Agent là gì ? Ứng dụng như thế nào và làm thế nào để tự tạo các AI Agent của riêng mình?
+
+Các model opensource hiện nay có sử dụng làm AI Agent được không ? Và sử dụng như thế nào ?
 
 Anh chị em DE đã sử dụng AI Agent nào chưa? cùng thảo luận ở đây nhé !
