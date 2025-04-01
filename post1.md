@@ -24,7 +24,7 @@ Hầu hết các model LLM hiện nay đều sử dụng kiến trúc transforme
 Phần này hơi lý thuyết nhưng em/mình sẽ cố gắng diễn giải ngắn gọn để mọi người hiểu những bước quan trọng để khi finetuning hoặc áp dụng RAG vào model LLM sẽ cần đến.
 
 ## Giải thích các khái niệm ở trên và những gì xảy ra ở bước đó
-- LLM viết tắt của Large Language Model là các mô hình ngôn ngữ lớn (hàng trăm triệu đến hàng tỉ tham số) được huấn luyện trên tập dữ liệu rất lớn (hàng nghìn tỉ token) trong nhiều giờ bằng rất nhiều gpu. Nhận đầu vào là một chuỗi text và trả ra kết quả có thể là chuỗi text có liên quan đến input (làm thơ, trả lời yêu cầu ...) hoặc xác suất (đối với bài toán phân lớp).
+- LLM viết tắt của Large Language Model là các mô hình ngôn ngữ lớn (hàng trăm triệu đến hàng tỉ tham số) được huấn luyện trên tập dữ liệu rất lớn (hàng nghìn tỉ token) trong nhiều giờ bằng rất nhiều gpu. Nhận đầu vào là một chuỗi text và trả ra kết quả có thể là chuỗi text có liên quan đến input (làm thơ, trả lời yêu cầu ...).
 
 - Text/Prompt: là chuỗi các yêu cầu người dùng ví dụ: "Hôm nay là thứ mấy?"
 
@@ -34,7 +34,7 @@ Phần này hơi lý thuyết nhưng em/mình sẽ cố gắng diễn giải ng�
 
 - Attention & Transformer Layers: Phần này khá dài, phức tạp và không quá quan trọng để có thể áp dụng RAG hay finetuning nên mọi người có thể tìm hiểu thêm tại https://www.youtube.com/watch?v=_Zt23FA31co&t=125s
 
-- Decoding & Sampling:  ở bước này sẽ cấu hình để LLM sáng tạo hơn (temperature), Giới hạn số lượng từ có xác suất cao nhất để lựa chọn(Top-k Sampling) ... phần này chủ yếu để cấu hình model khi sử dụng.
+- Decoding & Sampling:  ở bước này sẽ cấu hình các thuật toán search, sinh từ để LLM sáng tạo hơn (temperature), Giới hạn số lượng từ có xác suất cao nhất để lựa chọn(Top-k Sampling) ... phần này chủ yếu để cấu hình model khi sử dụng.
 
 - Output: Các token sinh ra lần lượt dưới dạng số được giải mã (decode) về text và ghép lại với nhau thành câu trả lời. Việc sinh từ xảy ra tuần tự như sau:
 
@@ -57,7 +57,9 @@ Sau đó ghép chuỗi có được lại và cắt đi phần input ban đầu 
 - Tương tự thì Embedding cũng có giới hạn về token size. Cần chú ý khi sử dụng RAG
 
 # Fine-tuning LLM
-- LLM là neural network rất lớn với rất nhiều layer và số lượng parameters lên đến hàng tỉ vì thế việc training với tất cả lượng parameters đó là rất tốn kém. Người ta đã chứng minh được rằng, các lớp càng gần input thì càng mang tính tổng quát, đặc trưng chung, các lớp càng gần output thì càng mang tính riêng biệt cho các bài toán cụ thể. Vậy nên kĩ thuật finetuning ra đời, bằng cách loại bỏ đi những layer gần output của model, thay chúng bằng các layer mới và chỉ cập nhật lại các parameters của các layer mới đó giúp tiết kiệm chi phí tính toán rất nhiều.
+- LLM là neural network rất lớn với rất nhiều layer và số lượng parameters lên đến hàng tỉ vì thế việc training với tất cả lượng parameters đó là rất tốn kém.
+
+Người ta đã chứng minh được rằng, các lớp càng gần input thì càng mang tính tổng quát, đặc trưng chung, các lớp càng gần output thì càng mang tính riêng biệt cho các bài toán cụ thể. Vậy nên kĩ thuật finetuning ra đời, bằng cách loại bỏ đi những layer gần output của model, thay chúng bằng các layer mới và chỉ cập nhật lại các parameters của các layer mới đó giúp tiết kiệm chi phí tính toán rất nhiều.
 
 => Tiết kiệm đáng kể chi phí tính toán vì chỉ cần cập nhật một phần nhỏ của mô hình.
 
